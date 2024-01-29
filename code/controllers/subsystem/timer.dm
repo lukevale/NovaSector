@@ -494,7 +494,7 @@ SUBSYSTEM_DEF(timer)
 	prev = next = null
 	bucket_pos = -1
 	bucket_joined = FALSE
-
+/*
 /datum/timedevent/proc/operator""()
 	if(!length(timer_info))
 		return "Event not filled"
@@ -509,7 +509,7 @@ SUBSYSTEM_DEF(timer)
 		callBack: [text_ref(timer_info[5])], callBack.object: [timer_info[6]]([timer_info[7]]), \
 		callBack.delegate:[timer_info[8]], source: [timer_info[9]]"
 #endif
-
+*/
 /**
  * Attempts to add this timed event to a bucket, will enter the secondary queue
  * if there are no appropriate buckets at this time.
