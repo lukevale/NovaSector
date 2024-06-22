@@ -690,7 +690,7 @@ ADMIN_VERB_VISIBILITY(start_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DE
 ADMIN_VERB(start_line_profiling, R_DEBUG, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	LINE_PROFILE_START
 
-	message_admins(span_adminnotice("[key_name_admin(user)] started line by line profiling."))
+//	message_admins(span_adminnotice("[key_name_admin(user)] started line by line profiling."))
 	BLACKBOX_LOG_ADMIN_VERB("Start Line Profiling")
 	log_admin("[key_name(user)] started line by line profiling.")
 
