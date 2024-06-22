@@ -4211,7 +4211,6 @@
 #include "code\modules\forensics\forensics_helpers.dm"
 #include "code\modules\hallucination\_hallucination.dm"
 #include "code\modules\hallucination\battle.dm"
-#include "code\modules\hallucination\body.dm"
 #include "code\modules\hallucination\bolted_airlocks.dm"
 #include "code\modules\hallucination\bubblegum_attack.dm"
 #include "code\modules\hallucination\delusions.dm"
