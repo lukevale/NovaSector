@@ -81,7 +81,7 @@
 /// The special hatsune miku themed mi-go.
 /mob/living/basic/migo/hatsune
 	name = "hatsune mi-go"
-	desc = parent_type::desc + " This one is wearing a bright blue wig."
+	desc = " This one is wearing a bright blue wig."
 	icon_state = "mi-go-h"
 	icon_living = "mi-go-h"
 

@@ -197,7 +197,6 @@
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = /datum/uplink_category/discounts
-	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Probably not necessary but just in case
 
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment
@@ -206,7 +205,6 @@
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1
 	illegal_tech = FALSE
-	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Ditto
 
 /datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
 	..()

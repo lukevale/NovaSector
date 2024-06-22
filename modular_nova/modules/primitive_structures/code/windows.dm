@@ -4,7 +4,6 @@
 	icon = 'modular_nova/modules/primitive_structures/icons/windows.dmi'
 	icon_state = "green_glass"
 	flags_1 = NONE
-	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	can_be_unanchored = FALSE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1

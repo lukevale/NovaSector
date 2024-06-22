@@ -11,7 +11,6 @@
 	processing_flags = START_PROCESSING_MANUALLY
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.75
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50

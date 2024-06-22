@@ -398,7 +398,6 @@
 	health = 40
 	maxHealth = 40
 	req_one_access = list(ACCESS_SYNDICATE)
-	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
 	radio_key = /obj/item/encryptionkey/syndicate
 	radio_channel = RADIO_CHANNEL_SYNDICATE
 	damage_type_healer = HEAL_ALL_DAMAGE

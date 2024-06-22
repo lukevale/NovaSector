@@ -25,7 +25,7 @@
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	///A string of flavortext to be displayed at the top of the UI, related to the type of blueprints we are.
 	var/fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."

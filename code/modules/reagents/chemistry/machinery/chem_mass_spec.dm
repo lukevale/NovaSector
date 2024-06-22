@@ -5,7 +5,6 @@
 	icon_state = "HPLC"
 	base_icon_state = "HPLC"
 	density = TRUE
-	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	processing_flags = START_PROCESSING_MANUALLY

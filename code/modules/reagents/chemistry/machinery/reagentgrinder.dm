@@ -9,7 +9,6 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
-	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	anchored_tabletop_offset = 8
 
 	/// The maximum weight of items this grinder can hold

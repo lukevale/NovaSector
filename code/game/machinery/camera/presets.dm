@@ -96,7 +96,7 @@
 	c_tag = "Bomb Testing Site"
 	network = list(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE)
 	use_power = NO_POWER_USE //Test site is an unpowered area
-	resistance_flags = parent_type::resistance_flags | INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE
 	light_range = 10
 	start_active = TRUE
 

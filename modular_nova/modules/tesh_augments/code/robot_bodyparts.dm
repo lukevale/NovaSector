@@ -23,7 +23,6 @@
 	desc = "A skeletal limb wrapped in pseudomuscles and membranous feathers, with a low-conductivity case."
 	icon = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
 	icon_static = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW
 	unarmed_damage_high = TESHARI_PUNCH_HIGH
@@ -36,7 +35,6 @@
 	desc = "A skeletal limb wrapped in pseudomuscles and membranous feathers, with a low-conductivity case."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW
 	unarmed_damage_high = TESHARI_PUNCH_HIGH
@@ -49,7 +47,6 @@
 	desc = "A skeletal limb wrapped in pseudomuscles and membranous feathers, with a low-conductivity case."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW
 	unarmed_damage_high = TESHARI_PUNCH_HIGH
@@ -63,7 +60,6 @@
 	desc = "A skeletal limb wrapped in pseudomuscles and membranous feathers, with a low-conductivity case."
 	icon_static =  'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW
 	unarmed_damage_high = TESHARI_PUNCH_HIGH
@@ -77,7 +73,6 @@
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell, covered in a layer of membranous feathers."
 	icon_static =  'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	brute_modifier = 1
 	burn_modifier = 0.9
@@ -89,7 +84,6 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals. A layer of membranous feathers covers the stark metal."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW
 	unarmed_damage_high = TESHARI_PUNCH_HIGH
@@ -106,7 +100,6 @@
 	desc = "A skeletal, robotic wing. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
@@ -125,7 +118,6 @@
 	desc = "A skeletal, robotic wing. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -143,7 +135,6 @@
 	desc = "A skeletal, robotic hindlimb. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -162,7 +153,6 @@
 	desc = "A skeletal, robotic hindlimb. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -181,7 +171,6 @@
 	desc = "A skeletal, robotic wing. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -199,7 +188,6 @@
 	desc = "A skeletal, robotic wing. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -219,7 +207,6 @@
 	desc = "A skeletal, robotic hindlimb. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -239,7 +226,6 @@
 	desc = "A skeletal, robotic hindlimb. Outdated and fragile, but it's still better than nothing. A layer of membranous feathers hides the cheap assembly."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/surplus_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 0.3
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 0.5
@@ -260,7 +246,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -278,7 +263,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -296,7 +280,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -315,7 +298,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -334,7 +316,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -352,7 +333,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -370,7 +350,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
@@ -389,7 +368,6 @@
 	desc = "An advanced robotic hindlimb. These designs are usually reserved for those still on the search for Avalon."
 	icon_static = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
 	icon = 'modular_nova/modules/tesh_augments/icons/advanced_augments_teshari.dmi'
-	bodyshape = parent_type::bodyshape | BODYSHAPE_CUSTOM
 
 	unarmed_damage_low = TESHARI_PUNCH_LOW * 2
 	unarmed_damage_high = TESHARI_PUNCH_HIGH * 3
