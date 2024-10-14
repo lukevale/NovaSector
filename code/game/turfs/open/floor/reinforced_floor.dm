@@ -4,7 +4,7 @@
 	desc = "Extremely sturdy."
 	icon_state = "engine"
 	holodeck_compatible = TRUE
-	thermal_conductivity = 0.025
+	thermal_conductivity = 0.01
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
@@ -13,6 +13,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 
 /turf/open/floor/engine/examine(mob/user)
@@ -183,7 +184,9 @@
 	name = "air floor"
 	initial_gas_mix = ATMOS_TANK_AIRMIX
 
-
+/turf/open/floor/engine/xenobio
+	name = "xenobio bz floor"
+	initial_gas_mix = XENOBIO_BZ
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"

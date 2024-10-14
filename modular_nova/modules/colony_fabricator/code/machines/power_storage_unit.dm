@@ -5,11 +5,10 @@
 		<b>higher maximum output</b> than some larger units. Most commonly seen being used not for their ability to store \
 		power, but rather for use in regulating power input and output."
 	icon = 'modular_nova/modules/colony_fabricator/icons/power_storage_unit/small_battery.dmi'
-	capacity = 750 * 1000
-	input_level_max = 400 * 1000
-	output_level_max = 400 * 1000
+	capacity = 7.5 * STANDARD_BATTERY_CHARGE
+	input_level_max = 400 KILO WATTS
+	output_level_max = 400 KILO WATTS
 	circuit = null
-	obj_flags = CAN_BE_HIT | NO_DECONSTRUCTION
 	/// The item we turn into when repacked
 	var/repacked_type = /obj/item/flatpacked_machine/station_battery
 
@@ -34,6 +33,13 @@
 		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
 	return TRUE
 
+// formerly NO_DECONSTRUCTION
+/obj/machinery/power/smes/battery_pack/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
+
+/obj/machinery/power/smes/battery_pack/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
+	return NONE
+
 // We don't care about the parts updates because we don't want them to change
 /obj/machinery/power/smes/battery_pack/RefreshParts()
 	return
@@ -54,6 +60,7 @@
 
 /obj/item/flatpacked_machine/station_battery
 	name = "flat-packed stationary battery"
+	desc = /obj/machinery/power/smes/battery_pack::desc
 	icon_state = "battery_small_packed"
 	type_to_deploy = /obj/machinery/power/smes/battery_pack
 	custom_materials = list(
@@ -71,9 +78,9 @@
 		<b>low maximum output</b> compared to smaller units. Most commonly seen as large backup batteries, or simply \
 		for large power storage where throughput is not a concern."
 	icon = 'modular_nova/modules/colony_fabricator/icons/power_storage_unit/large_battery.dmi'
-	capacity = 10000 * 1000
-	input_level_max = 50 * 1000
-	output_level_max = 50 * 1000
+	capacity = 100 * STANDARD_BATTERY_CHARGE
+	input_level_max = 50 KILO WATTS
+	output_level_max = 50 KILO WATTS
 	repacked_type = /obj/item/flatpacked_machine/large_station_battery
 
 // Automatically set themselves to be completely charged on init
@@ -86,6 +93,7 @@
 
 /obj/item/flatpacked_machine/large_station_battery
 	name = "flat-packed large stationary battery"
+	desc = /obj/machinery/power/smes/battery_pack/large::desc
 	icon_state = "battery_large_packed"
 	type_to_deploy = /obj/machinery/power/smes/battery_pack/large
 	custom_materials = list(

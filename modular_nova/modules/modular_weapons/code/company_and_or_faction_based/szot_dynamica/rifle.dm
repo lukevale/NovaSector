@@ -23,7 +23,7 @@
 
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_OCLOTHING
+	slot_flags = ITEM_SLOT_BACK
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/lanca
 
@@ -32,8 +32,6 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0
-
-	can_bayonet = FALSE
 
 	burst_size = 1
 	fire_delay = 1.2 SECONDS
@@ -96,7 +94,6 @@
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wylom
 	can_suppress = FALSE
-	can_bayonet = FALSE
 
 	fire_sound = 'modular_nova/modules/novaya_ert/sound/amr_fire.ogg'
 	fire_sound_volume = 100 // BOOM BABY
@@ -109,6 +106,11 @@
 	actions_types = list()
 
 	force = 15 // I mean if you're gonna beat someone with the thing you might as well get damage appropriate for how big the fukken thing is
+
+/obj/item/gun/ballistic/automatic/wylom/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/scope, range_modifier = 0.5)
 
 /obj/item/gun/ballistic/automatic/wylom/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)

@@ -41,7 +41,7 @@
 #define PROGRAM_CATEGORY_SCIENCE "Science"
 
 ///The default amount a program should take in cell use.
-#define PROGRAM_BASIC_CELL_USE 15
+#define PROGRAM_BASIC_CELL_USE 2 WATTS
 
 ///This app grants a minor protection against being PDA bombed if installed.
 ///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).
@@ -121,6 +121,11 @@ GLOBAL_LIST_INIT(default_pda_themes, list(
 	PDA_THEME_RETRO_NAME = PDA_THEME_RETRO,
 	PDA_THEME_SYNTH_NAME = PDA_THEME_SYNTH,
 	PDA_THEME_TERMINAL_NAME = PDA_THEME_TERMINAL,
+	// NOVA EDIT ADDITION - START
+	CAT_THEME_NAME = PDA_THEME_CAT,
+	LIGHT_THEME_NAME = PDA_THEME_LIGHT_MODE,
+	ELDRITCH_THEME_NAME = PDA_THEME_SPOOKY,
+	// NOVA EDIT ADDITION - END
 ))
 
 ///List of PDA themes that are accessible to everyone by default.

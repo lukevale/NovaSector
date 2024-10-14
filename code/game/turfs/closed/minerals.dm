@@ -105,8 +105,6 @@
 
 	var/distance = 128 // Max distance for a get_dist is 127
 	for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
-		if(vent.unique_vent)
-			continue
 		if(vent.z != src.z)
 			continue //Silly
 		var/temp_distance = get_dist(src, vent)
@@ -145,15 +143,15 @@
 		return rand(1,5)
 
 	if(distance < VENT_PROX_VERY_HIGH)
-		return 5
+		return ORE_WALL_VERY_HIGH
 	if(distance < VENT_PROX_HIGH)
-		return 4
+		return ORE_WALL_HIGH
 	if(distance < VENT_PROX_MEDIUM)
-		return 3
+		return ORE_WALL_MEDIUM
 	if(distance < VENT_PROX_LOW)
-		return 2
+		return ORE_WALL_LOW
 	if(distance < VENT_PROX_FAR)
-		return 1
+		return ORE_WALL_FAR
 	return 0
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -247,7 +245,7 @@
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 50, target = src))
+	if(do_after(H, 5 SECONDS, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -280,7 +278,7 @@
 /turf/closed/mineral/random
 	/// What are the base odds that this turf spawns a mineral in the wall on initialize?
 	var/mineralChance = 13
-	/// Does this mineral determine it's random chance and mineral contents based on proximity to a vent? Overrides mineralChance and mineralAmt.
+	/// Does this mineral determine its random chance and mineral contents based on proximity to a vent? Overrides mineralChance and mineralAmt.
 	var/proximity_based = FALSE
 
 /// Returns a list of the chances for minerals to spawn.
@@ -325,7 +323,7 @@
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
 				M.mineralAmt = scale_ore_to_vent()
-				SSore_generation.post_ore_random["[M.mineralAmt]"] += 1
+				GLOB.post_ore_random["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
 			else
@@ -336,7 +334,7 @@
 			Change_Ore(path, FALSE)
 			Spread_Vein(path)
 			mineralAmt = scale_ore_to_vent()
-			SSore_generation.post_ore_manual["[mineralAmt]"] += 1
+			GLOB.post_ore_manual["[mineralAmt]"] += 1
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
@@ -410,8 +408,8 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
-	proximity_based = TRUE
-	mineralChance = 5
+	proximity_based = FALSE // Nova Edit: Original TRUE
+	mineralChance = 7 // Nova Edit: Original 5 (13)
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
 	return list(
@@ -438,7 +436,8 @@
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	weak_turf = TRUE
-	proximity_based = TRUE
+	proximity_based = FALSE // Nova Edit: Originally TRUE
+	mineralChance = 8 // Nova Edit: Originally Not defined - lowers from 13
 
 /turf/closed/mineral/random/snow/Change_Ore(ore_type, random = 0)
 	. = ..()
@@ -553,6 +552,12 @@
 	mineralType = /obj/item/stack/ore/iron
 	scan_state = "rock_Iron"
 
+/turf/closed/mineral/iron/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/iron/ice
 	icon_state = "icerock_iron"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
@@ -567,9 +572,21 @@
 	mineralType = /obj/item/stack/ore/uranium
 	scan_state = "rock_Uranium"
 
+/turf/closed/mineral/uranium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/stack/ore/diamond
 	scan_state = "rock_Diamond"
+
+/turf/closed/mineral/diamond/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/diamond/ice
 	icon_state = "icerock_iron"
@@ -595,6 +612,12 @@
 	mineralType = /obj/item/stack/ore/silver
 	scan_state = "rock_Silver"
 
+/turf/closed/mineral/silver/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/silver/ice/icemoon
 	turf_type = /turf/open/misc/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/ice/icemoon
@@ -604,9 +627,21 @@
 	mineralType = /obj/item/stack/ore/titanium
 	scan_state = "rock_Titanium"
 
+/turf/closed/mineral/titanium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
 	scan_state = "rock_Plasma"
+
+/turf/closed/mineral/plasma/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/plasma/ice
 	icon_state = "icerock_plasma"
@@ -622,6 +657,12 @@
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
 	scan_state = "rock_Bananium"
+
+/turf/closed/mineral/bananium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
@@ -656,6 +697,7 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
 	defer_change = TRUE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"
@@ -741,7 +783,10 @@
 
 /turf/closed/mineral/gibtonite/attackby(obj/item/attacking_item, mob/living/user, params)
 	var/previous_stage = stage
-	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
+	if(istype(attacking_item, /obj/item/goliath_infuser_hammer) && stage == GIBTONITE_ACTIVE)
+		user.visible_message(span_notice("[user] digs [attacking_item] to [src]..."), span_notice("Your tendril hammer instictively digs and wraps around [src] to stop it..."))
+		defuse(user)
+	else if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
 		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
 		defuse(user)
 	..()

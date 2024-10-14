@@ -2,8 +2,8 @@
 	name = "auditory sensors"
 	icon = 'modular_nova/master_files/icons/obj/surgery.dmi'
 	icon_state = "ears-ipc"
-	desc = "A pair of microphones intended to be installed in an IPC or Synthetics head, that grant the ability to hear."
-	zone = BODY_ZONE_HEAD
+	desc = "A pair of microphones intended to be installed inside a machine's chassis, that grant the ability to hear."
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 	maxHealth = 1 * STANDARD_ORGAN_THRESHOLD
@@ -20,14 +20,10 @@
 
 	switch(severity)
 		if(EMP_HEAVY)
-			owner.set_jitter_if_lower(SYNTH_BAD_EFFECT_DURATION * SYNTH_HEAVY_EMP_MULTIPLIER)
-			owner.set_dizzy_if_lower(SYNTH_BAD_EFFECT_DURATION * SYNTH_HEAVY_EMP_MULTIPLIER)
 			adjustEarDamage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, SYNTH_DEAF_STACKS)
 			to_chat(owner, span_warning("Alert: Null feedback from auditory sensors detected, seek maintenance immediately. Error Code: AS-105"))
 
 		if(EMP_LIGHT)
-			owner.set_jitter_if_lower(SYNTH_BAD_EFFECT_DURATION)
-			owner.set_dizzy_if_lower(SYNTH_BAD_EFFECT_DURATION)
 			adjustEarDamage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, SYNTH_DEAF_STACKS)
 			to_chat(owner, span_warning("Alert: Anomalous feedback from auditory sensors detected. Error Code: AS-50"))
 
@@ -43,6 +39,6 @@
 	)
 	build_path = /obj/item/organ/internal/ears/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_SUBCATEGORY_MECHFAB_ANDROID + RND_SUBCATEGORY_MECHFAB_ANDROID_ORGANS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE

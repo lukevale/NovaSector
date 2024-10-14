@@ -8,7 +8,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/armblade
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT,
@@ -114,6 +114,40 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/cyberimp_drill
+	name = "Dalba Masterworks 'Burrower' Integrated Drill"
+	desc = "Extending from a stabilization bracer built into the upper forearm, this implant allows for a steel mining drill to extend over the user's hand. Little by little, we advance a bit further with each turn. That's how a drill works!"
+	id = "ci-drill"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	materials = list (
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	construction_time = 20 SECONDS
+	build_path = /obj/item/organ/internal/cyberimp/arm/mining_drill
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/cyberimp_diamond_drill
+	name = "Dalba Masterworks 'Tunneler' Diamond Drill"
+	desc = "Extending from a stabilization bracer built into the upper forearm, this implant allows for a masterwork diamond mining drill to extend over the user's hand. This drill will open a hole in the universe, and that hole will be a path for those behind us!"
+	id = "ci-drill-diamond"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
+	)
+	construction_time = 30 SECONDS
+	build_path = /obj/item/organ/internal/cyberimp/arm/mining_drill/diamond
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/cyberimp_hacker
 	name = "Hacking Hand Implant"
 	desc = "An advanced hacking and machine modification toolkit fitted into an arm implant, designed to be installed on a subject's arm."
@@ -124,7 +158,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/hacker
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY,
@@ -141,7 +175,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/flash
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT,
@@ -159,7 +193,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/botany
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
@@ -171,7 +205,7 @@
 	desc = "These cybernetic eyes will give you Night Vision. Big, mean, and green."
 	id = "ci-nv"
 	build_type = PROTOLATHE | MECHFAB
-	construction_time = 60
+	construction_time = 6 SECONDS
 	materials = list(
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 6,
@@ -190,7 +224,7 @@
 	desc = "This implant will automatically attempt to jolt you awake from unconsciousness, with a short cooldown between jolts. Conflicts with the CNS Rebooter."
 	id = "ci-antisleep"
 	build_type = PROTOLATHE | MECHFAB
-	construction_time = 60
+	construction_time = 6 SECONDS
 	materials = list(
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 6,
@@ -208,7 +242,7 @@
 	desc = "This implant interfaces with a host's body, sending detailed readouts of the vessel's condition on command via the mind."
 	id = "ci-scanner"
 	build_type = MECHFAB | PROTOLATHE
-	construction_time = 40
+	construction_time = 4 SECONDS
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3,
@@ -231,7 +265,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/janitor
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
@@ -248,7 +282,7 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/lighter
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC,

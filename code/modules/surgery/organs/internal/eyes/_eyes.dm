@@ -13,12 +13,12 @@
 	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD //threshold at 30
 	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD //threshold at 20
 
-	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
-	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
-	now_failing = "<span class='warning'>Darkness envelopes you, as your eyes go blind!</span>"
-	now_fixed = "<span class='info'>Color and shapes are once again perceivable.</span>"
-	high_threshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
-	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
+	low_threshold_passed = span_info("Distant objects become somewhat less tangible.")
+	high_threshold_passed = span_info("Everything starts to look a lot less clear.")
+	now_failing = span_warning("Darkness envelopes you, as your eyes go blind!")
+	now_fixed = span_info("Color and shapes are once again perceivable.")
+	high_threshold_cleared = span_info("Your vision functions passably once more.")
+	low_threshold_cleared = span_info("Your vision is cleared of any ailment.")
 
 	/// Sight flags this eye pair imparts on its user.
 	var/sight_flags = NONE
@@ -134,6 +134,36 @@
 #define OFFSET_X 1
 #define OFFSET_Y 2
 
+/// Similar to get_status_text, but appends the text after the damage report, for additional status info
+/obj/item/organ/internal/eyes/get_status_appendix(advanced, add_tooltips)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		return
+	if(owner.is_blind())
+		if(advanced)
+			if(owner.is_blind_from(QUIRK_TRAIT))
+				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
+			if(owner.is_blind_from(TRAUMA_TRAIT))
+				return conditional_tooltip("Subject is blind from mental trauma.", "Repair via treatment of associated trauma.", add_tooltips)
+			if(owner.is_blind_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically blind.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
+			if(owner.is_blind_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is blind from eye damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/oculine::name], or protect eyes with a blindfold.", add_tooltips)
+		return "Subject is blind."
+	if(owner.is_nearsighted())
+		if(advanced)
+			if(owner.is_nearsighted_from(QUIRK_TRAIT))
+				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically nearsighted.", "Use medication such as [/datum/reagent/medicine/mutadone::name]. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is nearsighted from eye damage.", "Repair surgically or use medication such as [/datum/reagent/medicine/oculine::name]. Prescription glasses will assuage the effects.", add_tooltips)
+		return "Subject is nearsighted."
+	return ""
+
+/obj/item/organ/internal/eyes/show_on_condensed_scans()
+	// Always show if we have an appendix
+	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
@@ -142,7 +172,8 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/human/human_face.dmi' // NOVA EDIT ADDITION
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD) // NOVA EDIT ADDITION
+	var/eye_icon = my_head?.eyes_icon || 'icons/mob/human/human_face.dmi' // NOVA EDIT ADDITION
 
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -eyes_layer) // NOVA EDIT CHANGE - Customization - ORIGINAL: var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -eyes_layer) // NOVA EDIT CHANGE - Customization - ORIGINAL: var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
@@ -152,11 +183,22 @@
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -eyes_layer, alpha = eye_left.alpha) // NOVA EDIT CHANGE - ORIGINAL: overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -BODY_LAYER, alpha = eye_left.alpha)
 		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -eyes_layer, alpha = eye_right.alpha) // NOVA EDIT CHANGE - ORIGINAL: overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -BODY_LAYER, alpha = eye_left.alpha)
-	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+	//var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD) // NOVA EDIT REMOVAL -  moved up a few lines
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
-			eye_right.color = eye_color_right
-			eye_left.color = eye_color_left
+			if(IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || (parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT)))
+				// show the eyes as open
+				eye_right.color = eye_color_right
+				eye_left.color = eye_color_left
+			else
+				// show the eyes as closed, and as such color them like eyelids wound be colored
+				var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)
+				base_color[2] *= 0.85
+				base_color[3] *= 0.85
+				var/eyelid_color = rgb(base_color[1], base_color[2], base_color[3], (length(base_color) >= 4 ? base_color[4] : null), COLORSPACE_HSL)
+				eye_right.color = eyelid_color
+				eye_left.color = eyelid_color
+
 		if(my_head.worn_face_offset)
 			my_head.worn_face_offset.apply_offset(eye_left)
 			my_head.worn_face_offset.apply_offset(eye_right)
@@ -388,8 +430,9 @@
 	tint = INFINITY
 	var/obj/item/flashlight/eyelight/eye
 
-/obj/item/organ/internal/eyes/robotic/flashlight/emp_act(severity)
-	return
+/obj/item/organ/internal/eyes/robotic/flashlight/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/organ/internal/eyes/robotic/flashlight/on_mob_insert(mob/living/carbon/victim)
 	. = ..()
@@ -413,8 +456,9 @@
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/organ/internal/eyes/robotic/shield/emp_act(severity)
-	return
+/obj/item/organ/internal/eyes/robotic/shield/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 #define MATCH_LIGHT_COLOR 1
 #define USE_CUSTOM_COLOR 0
@@ -450,7 +494,7 @@
 	deactivate(close_ui = TRUE)
 	QDEL_NULL(eye)
 
-/obj/item/organ/internal/eyes/robotic/glow/emp_act()
+/obj/item/organ/internal/eyes/robotic/glow/emp_act(severity)
 	. = ..()
 	if(!eye.light_on || . & EMP_PROTECT_SELF)
 		return
@@ -477,7 +521,7 @@
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
 	return GLOB.default_state
 
-/obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user)
+/obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user, datum/ui_state/state)
 	if(!QDELETED(owner))
 		if(owner == user)
 			return min(
@@ -530,7 +574,7 @@
 				set_beam_color(new_color, to_update)
 				return TRUE
 		if("enter_color")
-			var/new_color = lowertext(params["new_color"])
+			var/new_color = LOWER_TEXT(params["new_color"])
 			var/to_update = params["to_update"]
 			set_beam_color(new_color, to_update, sanitize = TRUE)
 			return TRUE
@@ -754,16 +798,9 @@
 	low_light_cutoff = list(5, 12, 20)
 	medium_light_cutoff = list(15, 20, 30)
 	high_light_cutoff = list(30, 35, 50)
-	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_mob_insert(mob/living/carbon/eye_owner)
 	. = ..()
-	//add lighting
-	if(!adapt_light)
-		adapt_light = new /obj/item/flashlight/eyelight/adapted()
-	adapt_light.set_light_on(TRUE)
-	adapt_light.forceMove(eye_owner)
-	adapt_light.update_brightness(eye_owner)
 	ADD_TRAIT(eye_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(seconds_per_tick, times_fired)
@@ -776,9 +813,5 @@
 	. = ..()
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_mob_remove(mob/living/carbon/unadapted, special = FALSE)
-	//remove lighting
-	adapt_light.set_light_on(FALSE)
-	adapt_light.update_brightness(unadapted)
-	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()

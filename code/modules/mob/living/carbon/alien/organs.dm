@@ -197,23 +197,13 @@
 	for(var/atom/movable/thing as anything in stomach_contents)
 		if(!digestable_cache[thing.type])
 			continue
-		thing.reagents.trans_to(src, 4)
-
-		if(isliving(thing))
-			var/mob/living/lad = thing
-			lad.adjustBruteLoss(6)
-		else if(!thing.reagents.total_volume) // Mobs can't get dusted like this, too important
-			qdel(thing)
+		thing.acid_act(75, 10)
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
-		var/mob/living/lad = thing
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
-		if(lad.stat == DEAD)
-			qdel(lad)
-			return
 	stomach_contents += thing
 	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
 
@@ -301,7 +291,7 @@
 	// At 100% damage, the stomach burts
 	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
 	if(!prob((damage_ratio * 100) - 50) && damage_ratio != 1)
-		playsound(play_from, 'sound/creatures/alien_organ_cut.ogg', 100, 1)
+		playsound(play_from, 'sound/mobs/non-humanoids/alien/alien_organ_cut.ogg', 100, 1)
 		// We try and line up the "jump" here with the sound of the hit
 		var/oldx = play_from.pixel_x
 		var/oldy = play_from.pixel_y
@@ -329,7 +319,7 @@
 		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
 			span_userdanger("[user] escapes from your [stomach_text]. Hell, that hurts."))
 
-	playsound(get_turf(play_from), 'sound/creatures/alien_explode.ogg', 100, extrarange = 4)
+	playsound(get_turf(play_from), 'sound/mobs/non-humanoids/alien/alien_explode.ogg', 100, extrarange = 4)
 	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1, 8)
 	shake_camera(user, 1 SECONDS, 3)
 	if(owner)

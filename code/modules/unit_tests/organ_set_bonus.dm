@@ -22,7 +22,7 @@
 		/datum/infuser_entry/fly,
 	))
 	// Fetch the globally instantiated DNA Infuser entries.
-	for(var/datum/infuser_entry/infuser_entry as anything in GLOB.infuser_entries)
+	for(var/datum/infuser_entry/infuser_entry as anything in flatten_list(GLOB.infuser_entries))
 		var/output_organs = infuser_entry.output_organs
 		var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 		lab_rat.dna.mutant_bodyparts["moth_antennae"] = list(MUTANT_INDEX_NAME = "Plain", MUTANT_INDEX_COLOR_LIST = list("#FFFFFF"), MUTANT_INDEX_EMISSIVE_LIST = list(FALSE)) // NOVA EDIT - Customization
@@ -35,7 +35,9 @@
 			inserted_organs += organ
 
 		// Search for added Status Effect.
-		var/datum/status_effect/organ_set_bonus/added_status = locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects
+		var/datum/status_effect/organ_set_bonus/added_status
+		if(!infuser_entry.unreachable_effect)
+			added_status = locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects
 
 		// If threshold_desc is filled-in, it implies the organ_set_bonus Status Effect should be activated.
 		// Without it, we'll assume there isn't a Status Effect to look for.

@@ -1,7 +1,9 @@
+#define MINIMUM_VALUE_MULT 0.95 // NOVA EDIT: used in price_minimum declarations, /tg/ default is 0.5
+#define MAXIMUM_VALUE_MULT 1.05 // NOVA EDIT: used in prixe_maximum declarations, /tg/ default is 3
 
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
-	wait = 20 SECONDS
+	wait = 60 SECONDS
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 
@@ -9,7 +11,7 @@ SUBSYSTEM_DEF(stock_market)
 	var/list/materials_prices = list()
 	/// Associated list of materials alongside their market trends. 1 is up, 0 is stable, -1 is down.
 	var/list/materials_trends = list()
-	/// Associated list of materials alongside the life of it's current trend. After it's life is up, it will change to a new trend.
+	/// Associated list of materials alongside the life of its current trend. After its life is up, it will change to a new trend.
 	var/list/materials_trend_life = list()
 	/// Associated list of materials alongside their available quantity. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
 	var/list/materials_quantity = list()
@@ -28,7 +30,7 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
 
 			materials_trend_life += possible_market
-			materials_trend_life[possible_market] = rand(1,10)
+			materials_trend_life[possible_market] = rand(1,3)
 
 			materials_quantity += possible_market
 			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-(possible_market.tradable_base_quantity) * 0.5, possible_market.tradable_base_quantity * 0.5))
@@ -40,6 +42,37 @@ SUBSYSTEM_DEF(stock_market)
 	for(var/datum/stock_market_event/event as anything in active_events)
 		event.handle()
 
+///Adjust the price of a material(either through buying or selling) ensuring it stays within limits
+/datum/controller/subsystem/stock_market/proc/adjust_material_price(datum/material/mat, delta)
+	mat = GET_MATERIAL_REF(mat)
+
+	//adjust the price
+	var/new_price = materials_prices[mat.type] + delta
+
+	//get the limits
+	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * MINIMUM_VALUE_MULT) // NOVA EDIT: magic number replacement
+	if(!isnull(mat.minimum_value_override))
+		price_minimum = round(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
+	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * MAXIMUM_VALUE_MULT) // NOVA EDIT: magic number replacement
+
+	//clamp it down
+	new_price = round(clamp(new_price, price_minimum, price_maximum))
+	materials_prices[mat.type] = new_price
+
+///Adjust the amount of material(either through buying or selling) ensuring it stays within limits
+/datum/controller/subsystem/stock_market/proc/adjust_material_quantity(datum/material/mat, delta)
+	mat = GET_MATERIAL_REF(mat)
+
+	//adjust the quantity
+	var/new_quantity = materials_quantity[mat.type] + delta
+
+	//get the upper limit
+	var/quantity_baseline = mat.tradable_base_quantity
+
+	//clamp it down
+	new_quantity = round(clamp(new_quantity, 0, quantity_baseline * 2))
+	materials_quantity[mat.type] = new_quantity
+
 /**
  * Handles shifts in the cost of materials, and in what direction the material is most likely to move.
  */
@@ -50,10 +83,10 @@ SUBSYSTEM_DEF(stock_market)
 	var/trend_life = materials_trend_life[mat]
 
 	var/price_units = materials_prices[mat]
-	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5)
+	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * MINIMUM_VALUE_MULT) // NOVA EDIT: magic number replacement
 	if(!isnull(mat.minimum_value_override))
 		price_minimum = round(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
-	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * MAXIMUM_VALUE_MULT) // NOVA EDIT: magic number replacement
 	var/price_baseline = mat.value_per_unit * SHEET_MATERIAL_AMOUNT
 	var/quantity_baseline = mat.tradable_base_quantity
 
@@ -80,7 +113,7 @@ SUBSYSTEM_DEF(stock_market)
 				materials_trends[mat] = MARKET_TREND_DOWNWARD
 			else
 				materials_trends[mat] = MARKET_TREND_STABLE
-		materials_trend_life[mat] = rand(3,10) // Change our trend life for x number of fires of the subsystem
+		materials_trend_life[mat] = rand(1,3) // Change our trend life for x number of fires of the subsystem
 	else
 		materials_trend_life[mat] -= 1
 
@@ -88,14 +121,14 @@ SUBSYSTEM_DEF(stock_market)
 	var/quantity_change = 0
 	switch(trend)
 		if(MARKET_TREND_UPWARD)
-			price_change = ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05)) //If we don't ceil, small numbers will get trapped at low values
-			quantity_change = -round(gaussian(quantity_baseline * 0.05, quantity_baseline * 0.05))
+			price_change = ROUND_UP(gaussian(price_units * 0.30, price_baseline * 0.15)) //If we don't ceil, small numbers will get trapped at low values
+			quantity_change = -round(gaussian(quantity_baseline * 0.15, quantity_baseline * 0.15))
 		if(MARKET_TREND_STABLE)
 			price_change = round(gaussian(0, price_baseline * 0.01))
-			quantity_change = round(gaussian(0, quantity_baseline * 0.01))
+			quantity_change = round(gaussian(0, quantity_baseline * 0.5))
 		if(MARKET_TREND_DOWNWARD)
-			price_change = -ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05))
-			quantity_change = round(gaussian(quantity_baseline * 0.05, quantity_baseline * 0.05))
+			price_change = -ROUND_UP(gaussian(price_units * 0.3, price_baseline * 0.15))
+			quantity_change = round(gaussian(quantity_baseline * 0.15, quantity_baseline * 0.15))
 	materials_prices[mat] =  round(clamp(price_units + price_change, price_minimum, price_maximum))
 	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, quantity_baseline * 2))
 
@@ -109,3 +142,6 @@ SUBSYSTEM_DEF(stock_market)
 	event = new event
 	if(event.start_event(mat))
 		active_events += event
+
+#undef MINIMUM_VALUE_MULT // NOVA EDIT: used in price min/max declarations
+#undef MAXIMUM_VALUE_MULT // NOVA EDIT: used in price min/max declarations

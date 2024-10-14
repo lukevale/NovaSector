@@ -14,6 +14,7 @@
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NODEATH,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_ZOMBIFY,
@@ -47,11 +48,11 @@
 
 	/// Spooky growls we sometimes play while alive
 	var/static/list/spooks = list(
-		'sound/hallucinations/growl1.ogg',
-		'sound/hallucinations/growl2.ogg',
-		'sound/hallucinations/growl3.ogg',
-		'sound/hallucinations/veryfar_noise.ogg',
-		'sound/hallucinations/wail.ogg',
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg',
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
@@ -106,6 +107,7 @@
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,

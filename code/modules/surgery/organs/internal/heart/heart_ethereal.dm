@@ -188,7 +188,7 @@
 	src.ethereal_heart = ethereal_heart
 	ethereal_heart.owner.visible_message(span_notice("The crystals fully encase [ethereal_heart.owner]!"))
 	to_chat(ethereal_heart.owner, span_notice("You are encased in a huge crystal!"))
-	playsound(get_turf(src), 'sound/effects/ethereal_crystalization.ogg', 50)
+	playsound(get_turf(src), 'sound/mobs/humanoids/ethereal/ethereal_crystalization.ogg', 50)
 	var/atom/movable/possible_chair = ethereal_heart.owner.buckled
 	possible_chair?.unbuckle_mob(ethereal_heart.owner, force = TRUE)
 	ethereal_heart.owner.forceMove(src) //put that ethereal in
@@ -204,7 +204,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/ethereal_crystal/atom_destruction(damage_flag)
-	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive_fail.ogg', 100)
+	playsound(get_turf(ethereal_heart.owner), 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg', 100)
 	return ..()
 
 /obj/structure/ethereal_crystal/Destroy()
@@ -217,7 +217,7 @@
 	ethereal_heart.owner.forceMove(get_turf(src))
 	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	deltimer(crystal_heal_timer)
-	visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out."))
+	visible_message(span_notice("The crystalline mass shatters, retreating into [ethereal_heart.owner]'s newly formed body.")) //NOVA EDIT CHANGE - Ethereal Rework 2024 - This reads cooler, okay? - ORIGINAL: visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out."))
 	return ..()
 
 /obj/structure/ethereal_crystal/update_overlays()
@@ -237,10 +237,11 @@
 	// revive will regenerate organs, so our heart refence is going to be null'd. Unreliable
 	var/mob/living/carbon/regenerating = ethereal_heart.owner
 
-	playsound(get_turf(regenerating), 'sound/effects/ethereal_revive.ogg', 100)
-	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
-	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
+	playsound(get_turf(regenerating), 'sound/mobs/humanoids/ethereal/ethereal_revive.ogg', 100)
+	to_chat(regenerating, span_purple("You burst out of the crystal with vigour... but you feel as if you should keep safe for a little while.")) //NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINAL: to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
+	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS) //NOVA EDIT CHANGE - Ethereal Rework 2024 - Original: regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_SURGERY)
+	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_SURGERY) //NOVA EDIT CHANGE - Ethereal Rework 2024 - Original: regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
+	regenerating.apply_status_effect(/datum/status_effect/vulnerable_to_damage) //NOVA EDIT ADDITION - This lasts for five minutes, the full duration of the cooldown.
 	// revive calls fully heal -> deletes the crystal.
 	// this qdeleted check is just for sanity.
 	if(!QDELETED(src))
